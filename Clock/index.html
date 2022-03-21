@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+       
+      </div>
+    </div>
+    <div >
+        <p id="demo">
+        
+        </p>
+    </div>
+
+
+  <style>
+    html {
+      background: #018DED url(https://swall.teahub.io/photos/small/225-2257163_wallpaper-glare-light-blurry-dark-blurry-background-1080p.jpg);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 14px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      min-height: 80vh;
+     
+    }
+
+    .clock {
+      align-items: center;
+      display: flex;
+      flex: 1;
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid #f2f5ff;
+      border-radius: 50%;
+      margin: 40px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(225, 250, 0, 0.1),
+        inset 0 0 0 3px #cfcc0d,
+        inset 0 0 10px rgb(255, 251, 0),
+        0 0 10px rgba(251, 255, 0, 0.2);
+    }
+    p{
+        font-size: 6rem;
+        color: #f2f5ff;
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 8px;
+      background: rgb(229, 255, 0);
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%;
+      transform:rotate(90deg);
+      transition: all 0.5s;
+      transition-timing-function: cubic-bezier(0, 0.8, 0.41, 1.57);
+
+    }
+
+    .hour-hand{
+        height: 16px;
+    }
+    .min-hand{
+        height: 10px;
+    }
+    .second-hand{
+        height: 6px;
+    }
+
+  </style>
+
+  <script>
+      const secondHand=document.querySelector('.second-hand');
+      const minuteHand=document.querySelector('.min-hand');
+      const hourHand=document.querySelector('.hour-hand');
+      const digitalTime=document.getElementById('demo');
+      function setDate()
+      {
+         let now=new Date();   
+         let seconds=now.getSeconds();
+         let minutes=now.getMinutes();
+         let hour=now.getHours();
+         if(seconds===60)
+         {
+             secondHand.style.transition="none";
+         }
+         if(seconds<10){
+             seconds="0"+seconds;
+         }
+         if(minutes<10){
+             minutes="0"+minutes;
+         }
+         if(hour<10){
+             hour="0"+hour;
+         }
+         const secondsDegree= (seconds/60)*360+90;
+         const minuteDegree=(minutes/60)*360+90;
+         const hourDegree=(minutes/12)*360+90;
+         secondHand.style.transform=`rotate(${secondsDegree}deg)`;
+         minuteHand.style.transform=`rotate(${minuteDegree}deg)`;
+         hourHand.style.transform=`rotate(${hourDegree}deg)`;
+         digitalTime.innerHTML=`${hour}:${minutes}:${seconds}`;    
+         
+      }
+      setInterval(setDate,1000);
+
+  </script>
+</body>
+</html>
